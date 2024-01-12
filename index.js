@@ -1,4 +1,6 @@
+const dbFunc = require("./db/db_connection");
 const express = require('express');
+
 const app = express();
 const port = 4500;
 
@@ -88,9 +90,17 @@ app.get('/users/getAllUser', function (req, res) {
  * Further configuration
  */
 app.get('/', function (req, res) {
-    res.send(`brigadepager backend, running on ${port}`);
+    res.send(`brigadepager_backend, running on ${port}`);
+    getAllUsers();
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+function launchServer() {
+    dbFunc.dbSmokeTest();
+
+    app.listen(port => {
+        console.log(`Example app listening on port ${port}`);
+    });
+}
+
+launchServer();
+
